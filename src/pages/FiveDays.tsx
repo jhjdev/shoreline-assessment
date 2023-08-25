@@ -55,6 +55,8 @@ const FiveDaysForecast = () => {
     ];
   });
 
+  console.log("chart data", chartData);
+
   // Trying to use line chart from recharts, but
   // I'm having trouble getting the exact data to show up
   // in the application.

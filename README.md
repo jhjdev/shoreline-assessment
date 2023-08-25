@@ -1,85 +1,70 @@
-# A Bartender Service Dashboard
+# Getting Started with Create React App
 
-A simple bartender order service dashboard where you can send drink orders to a NodeJS API, and then view all sent orders in a ReactJS frontend.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Run Locally
+## Available Scripts
 
-Clone the project
+In the project directory, you can run:
 
-```bash
-  git clone https://github.com/jhjdev/bartender-order-service/
-```
+### `npm start`
 
-Go to the project directory
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-```bash
-  cd bartender-order-service
-```
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-Install dependencies
+### `npm test`
 
-```bash
-yarn
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Start the server
+### `npm run build`
 
-```bash
-yarn start
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-**Yarn start will also start the NodeJS backend on port 4000.**
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Features and requirements:
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- The service accepts a POST requests with customer number and drink type (BEER|DRINK) and:
-  - Responds with 200 code when ordered drink will be served.
-  - Responds with 429 code when order is not accepted at the moment.
-  - Respond with 409 code if a customer number already exists.
-- When a post request is made, it is stored in the API.
-- The NodeJS Typescript API is separated into:
-  - index.ts (NodeJS server)
-  - orderController.ts (controller)
-  - order.ts (modal)
-- The Dashboard ReactJS Typescript Dashboard includes two components at the moment:
+### `npm run eject`
 
-  - AddOrder.tsx (where you can create a new order).
-  - Orders.tsx (where you can view orders that have been created).
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-- The barman can prepare at once 2 beers (drinks of BEER type) or 1 drink (DRINK type)
-- Preparing one drink takes X seconds (5 by default) regardless of drink type.
-- Drink requess get the response as soon as barman starts to prepare a drink. It is be delayed for the time of the drink preparation.
-- Each drink order contains a customer number, a drink type, and number of drinks ordered.
-- Each order is grouped in a from request that posts the order to the API.
-- Each order can either include 1 or two drinks of type BEER, or 1 drink of type DRINK. but never both types. You can choose drink of type BEER 2 times.
-- Customer numbers must be unique. If you try to enter the same customer number twice, a message with the status code 409 will appear.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-#### See the Roadmap section for list of improvements and changes.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-## Roadmap
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-- Full CRUD implementation, with update and delete functionality as well.
+## Learn More
 
-- Add price option to each order that will be stored in the API.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-- Add total price of all orders in the info cards at the top.
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-- Add total amount of all drink orders to API.
+### Code Splitting
 
-- Add total amount of all drink ordres in the info cards at at the top.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-- Cleanup Tailwind CSS classes
+### Analyzing the Bundle Size
 
-- Add a notification service that will display when an order is created, updated or deleted.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-- Add a login page with JWT authentication.
+### Making a Progressive Web App
 
-- Add a settings page where you can:
-  - Adjust the amount of drinks of types BEER and DRINK per order (currently set to max 2 of drink type BEER or 1 of drink tyoe DRINK)
-  - Add configuration for preparation time (currently set to 5 by default).
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-## Tech Stack
+### Advanced Configuration
 
-**Client:** TypeScript, React
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-**Server:** Node, Express
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

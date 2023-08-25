@@ -125,7 +125,7 @@ const CurrentWeather = () => {
                           <span className="text-slate-950 dark:text-slate-950">
                             Weather Type:
                           </span>
-                          <span className="text-red-900">{x.weather}</span>{" "}
+                          <span className="text-red-900">{x.weather}</span>
                           <br />
                         </p>
                       </div>
