@@ -46,20 +46,14 @@ const FiveDaysForecast = () => {
     fetchData();
   }, [lat, long]);
 
-  const fiveDaysData = data.slice(0, 30);
-
-  const chartData = fiveDaysData.map((item) => {
+  const chartData = data.slice(0, 30).map((item) => {
     return [
       {
         name: init + item?.timepoint,
         uv: item?.temp2m,
-        pv: item?.temp2m,
-        amt: item?.temp2m,
       },
     ];
   });
-
-  console.log("chart data:", chartData);
 
   // Trying to use line chart from recharts, but
   // I'm having trouble getting the exact data to show up
@@ -84,18 +78,31 @@ const FiveDaysForecast = () => {
                 </p>
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-4">
-                    <LineChart
-                      width={600}
-                      height={300}
-                      data={chartData}
-                      margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-                    >
-                      <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                    </LineChart>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <LineChart
+                        width={700}
+                        height={400}
+                        data={chartData}
+                        margin={{
+                          top: 10,
+                          right: 30,
+                          left: 0,
+                          bottom: 0,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line
+                          connectNulls
+                          type="monotone"
+                          dataKey="uv"
+                          stroke="#8884d8"
+                          fill="#8884d8"
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
                 </div>
               </div>
