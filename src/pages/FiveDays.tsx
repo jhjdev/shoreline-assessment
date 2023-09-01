@@ -37,12 +37,13 @@ const FiveDaysForecast = () => {
 
   console.log(...bars);
 
-  // Trying to use line chart from recharts, but
-  // I'm having trouble getting the exact data to show up
-  // in the application.
-  // Unfortunately, I haven't worked with rechart much before
-  // or data visualiation in React or React Native
-  // (E.g. charting libraries)
+  // Rechart renders the text on the axis a bit funky.
+  // Would need much more time to look into it in more
+  // detail.
+  // But it seems to render the correct data.
+  // Would need to figure out how to customize the
+  // tooltip at some point so that it displays data
+  // that is actually meaningful.
 
   return (
     <>

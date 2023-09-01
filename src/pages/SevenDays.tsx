@@ -5,12 +5,12 @@ const SevenDaysForecast = () => {
   const { sevenDaysData, sevenDaysInit, error } = useSharedWeatherDataState();
 
   // In the API, init gives you an inital date, and timepoint
-  // gives you the next 3 hours. Due to lack of time, I didn't
-  // have time to find a suitable sultion to format the date from the string
-  // and then add a method that would add the timepoints to give an exact
-  // timestamp for each card.
-  // This would also have allowed me to calculate each time point into individual day
-  // and get the highest and the lowest temp.
+  // gives you the next 3 hours.
+  // I did manage to write what I think is the beginning of a
+  // suitable date parser so that I could in theory use just
+  // CIVIL instead of CIVILLIGHT for the 7 days forecast.
+  // But CIVILLIGHT has much much better data for the 7 day
+  // forecast than CIVIL does.
 
   return (
     <>

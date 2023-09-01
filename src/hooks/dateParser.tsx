@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 
+// This ended up being a bit messy.
+// I was trying a few different ways
+// to parse and render tine and date.
+// The useDateParser I think turned
+// out to be the most promising one.
+
 export const useFormattedDate = (dateNumber: number) => {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {

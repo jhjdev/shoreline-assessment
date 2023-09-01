@@ -26,6 +26,10 @@ type SevenDaysData = {
   wind10m_max: number;
 };
 
+// Simple state management tool. I only need set
+// the states in App.tsx, and then I can share them
+// between all componenets.
+
 const useWeatherDataState = () => {
   const [lat, setLat] = useState<number | []>();
   const [long, setLong] = useState<number | []>();
