@@ -53,7 +53,7 @@ const FiveDaysForecast = () => {
             <div className="space-y-12">
               <div className="tw-border-solid border-b-2 border-cyan-700 shadow-cyan-700/50 pb-12">
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
-                  Five Days Forecast:
+                  Five Days Weather Forecast:
                 </h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">
                   Forecast for the next five days <br />
