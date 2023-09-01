@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -9,53 +8,34 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { useSharedWeatherDataState } from "../state/WeatherData.state";
+import { useDateParser } from "../hooks/dateParser";
+
+interface DataSeries {
+  timepoint: number;
+  // Other properties in the data object
+}
 
 const FiveDaysForecast = () => {
-  const [lat, setLat] = useState<number | []>();
-  const [long, setLong] = useState<number | []>();
-  const [error, setError] = useState();
-  const [data, setData] = useState<any[]>([]);
-  const [init, setInit] = useState(new Date());
+  const { data, init } = useSharedWeatherDataState();
+  const dataseries: DataSeries[] = [...data];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude);
-        setLong(position.coords.longitude);
+  const formattedDate = useDateParser(init, dataseries);
 
-        console.log("Latitude is:", lat);
-        console.log("Longitude is:", long);
-      });
-
-      const url =
-        "https://www.7timer.info/bin/civil.php?lon=" +
-        long +
-        "&lat=" +
-        lat +
-        "&ac=0&unit=metric&output=json&tzshift=0";
-
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        setData(json?.dataseries);
-        setInit(json?.init);
-      } catch (error: any) {
-        setError(error);
-      }
-    };
-    fetchData();
-  }, [lat, long]);
-
-  const chartData = data.slice(0, 30).map((item) => {
+  const chartData = data.slice(0, 30).map((x) => {
     return [
       {
-        name: init + item?.timepoint,
-        uv: item?.temp2m,
+        name: formattedDate,
+        temprature: x?.temp2m,
       },
     ];
   });
 
-  console.log("chart data", chartData);
+  const bars = chartData
+    .reduce((acc, itm) => acc.concat(itm), [])
+    .filter((i, x, s) => s.indexOf(i) === x);
+
+  console.log(...bars);
 
   // Trying to use line chart from recharts, but
   // I'm having trouble getting the exact data to show up
@@ -68,7 +48,7 @@ const FiveDaysForecast = () => {
     <>
       <div className="container max-w-full mt-4">
         <div className="w-full grid gap-6 mb-6">
-          <div className="w-7/12 px-4 py-5 bg-white border-cyan-700 border-2 shadow-cyan-700/50 rounded-lg shadow flex-col mx-auto">
+          <div className="w-full px-4 py-5 bg-white border-cyan-700 border-2 shadow-cyan-700/50 rounded-lg shadow flex-col mx-auto">
             <div className="space-y-12">
               <div className="tw-border-solid border-b-2 border-cyan-700 shadow-cyan-700/50 pb-12">
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -78,34 +58,31 @@ const FiveDaysForecast = () => {
                   Forecast for the next five days <br />
                   <br />
                 </p>
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-4">
-                    <ResponsiveContainer width="100%" height={300}>
-                      <LineChart
-                        width={700}
-                        height={400}
-                        data={chartData}
-                        margin={{
-                          top: 10,
-                          right: 30,
-                          left: 0,
-                          bottom: 0,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line
-                          connectNulls
-                          type="monotone"
-                          dataKey="uv"
-                          stroke="#8884d8"
-                          fill="#8884d8"
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
+                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1">
+                  <ResponsiveContainer width="100%" height={500}>
+                    <LineChart
+                      data={bars}
+                      height={500}
+                      margin={{
+                        top: 10,
+                        right: 30,
+                        left: 0,
+                        bottom: 0,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                      <YAxis tick={{ fontSize: 12 }} />
+                      <Tooltip />
+                      <Line
+                        connectNulls
+                        type="monotone"
+                        dataKey="temprature"
+                        stroke="#8884d8"
+                        fill="#8884d8"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </div>
