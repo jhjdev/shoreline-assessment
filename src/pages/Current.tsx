@@ -11,7 +11,7 @@ const CurrentWeather = () => {
       <div className="container max-w-full mt-2">
         <div className="grid grid-cols-1 gap-3 justify-evenly m-2">
           <h2 className="text-2xl text-blue-900 dark:text-white">
-            Today's Weather Forecast:
+            24 Hour Weather Forecast:
           </h2>
         </div>
         {error ? (
