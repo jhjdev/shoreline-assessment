@@ -1,8 +1,8 @@
-import { useFormattedDate } from "../hooks/dateParser";
+import { useSevenDaysParser } from "../hooks/dateParser";
 import { useSharedWeatherDataState } from "../state/WeatherData.state";
 
 const SevenDaysForecast = () => {
-  const { sevenDaysData, sevenDaysInit, error } = useSharedWeatherDataState();
+  const { sevenDaysData, error } = useSharedWeatherDataState();
 
   // In the API, init gives you an inital date, and timepoint
   // gives you the next 3 hours.
@@ -39,7 +39,7 @@ const SevenDaysForecast = () => {
                           </span>
                           <br />
                           <span className="text-red-700">
-                            {useFormattedDate(x?.date)}
+                            {useSevenDaysParser(x?.date)}
                           </span>
                           <br />
                           <span className="text-slate-950 dark:text-slate-950">

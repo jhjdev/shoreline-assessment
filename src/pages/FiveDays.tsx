@@ -17,15 +17,16 @@ interface DataSeries {
 }
 
 const FiveDaysForecast = () => {
-  const { data, init } = useSharedWeatherDataState();
+  const { data, init, loading } = useSharedWeatherDataState();
   const dataseries: DataSeries[] = [...data];
 
   const formattedDate = useDateParser(init, dataseries);
+  console.log("formattedDate", formattedDate);
 
-  const chartData = data.slice(0, 30).map((x) => {
+  const chartData = data.slice(0, 30).map((x, index) => {
     return [
       {
-        name: formattedDate,
+        name: formattedDate[index] || "No Date Available",
         temprature: x?.temp2m,
       },
     ];
@@ -44,6 +45,10 @@ const FiveDaysForecast = () => {
   // Would need to figure out how to customize the
   // tooltip at some point so that it displays data
   // that is actually meaningful.
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -75,6 +80,7 @@ const FiveDaysForecast = () => {
                       <XAxis dataKey="name" tick={{ fontSize: 12 }} />
                       <YAxis tick={{ fontSize: 12 }} />
                       <Tooltip />
+                      <Legend />
                       <Line
                         connectNulls
                         type="monotone"

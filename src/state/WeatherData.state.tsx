@@ -31,18 +31,13 @@ type SevenDaysData = {
 // between all componenets.
 
 const useWeatherDataState = () => {
-  const [lat, setLat] = useState<number | []>();
-  const [long, setLong] = useState<number | []>();
   const [init, setInit] = useState<string>("");
   const [data, setData] = useState<AllWeatherData[]>([]);
   const [sevenDaysInit, setSevenDaysInit] = useState<string>("");
   const [sevenDaysData, setSevenDaysData] = useState<SevenDaysData[]>([]);
-  const [error, setError] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<any>(null);
   return {
-    lat,
-    setLat,
-    long,
-    setLong,
     init,
     setInit,
     data,
@@ -51,6 +46,8 @@ const useWeatherDataState = () => {
     setSevenDaysInit,
     sevenDaysData,
     setSevenDaysData,
+    loading,
+    setLoading,
     error,
     setError,
   };

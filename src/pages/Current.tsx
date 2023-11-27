@@ -4,7 +4,7 @@ import { newCalculatedDate } from "../hooks/dateParser";
 const CurrentWeather = () => {
   const { data, init, error } = useSharedWeatherDataState();
   // Only map the current day and disaply the weather info during the day.
-  const currentDay = data.slice(0, 8);
+  const currentDay = Array.isArray(data) ? data.slice(0, 8) : [];
 
   return (
     <>

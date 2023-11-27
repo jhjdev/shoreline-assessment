@@ -4,69 +4,64 @@ import Sidebar from "./components/Sidebar";
 import "./App.css";
 import { useSharedWeatherDataState } from "./state/WeatherData.state";
 import { useEffect } from "react";
+import { SpinnerComponent } from "./components/Spinner";
 
 function App() {
   const {
-    lat,
-    setLat,
-    long,
-    setLong,
     setInit,
     setData,
     setSevenDaysInit,
     setSevenDaysData,
+    loading,
+    setLoading,
     setError,
   } = useSharedWeatherDataState();
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      setLat(position.coords.latitude);
-      setLong(position.coords.longitude);
-
-      // console.log("Latitude is:", lat);
-      // console.log("Longitude is:", long);
-    });
-    const fetchAllData = async () => {
-      const url =
-        "http://www.7timer.info/bin/api.pl?lon=" +
-        long +
-        "&lat=" +
-        lat +
-        "&product=civil&output=json";
-
+    const fetchData = async () => {
       try {
-        const response = await fetch(url);
-        const json = await response.json();
-        // console.log("Weather:", json?.dataseries);
-        setData(json?.dataseries);
-        setInit(json?.init);
-      } catch (error: any) {
-        console.log("error", error);
-        setError(error);
+        const position = await new Promise<GeolocationPosition>(
+          (resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+          }
+        );
+
+        const { latitude, longitude } = position.coords;
+
+        const fetchWeatherData = async (product: "civil" | "civillight") => {
+          const url = `http://www.7timer.info/bin/api.pl?lon=${longitude}&lat=${latitude}&product=${product}&output=json`;
+          const response = await fetch(url);
+          const json = await response.json();
+          return json;
+        };
+
+        const [data, init] = await Promise.all([
+          fetchWeatherData("civil"),
+          fetchWeatherData("civillight"),
+        ]);
+
+        setData(data?.dataseries || null);
+        setInit(data?.init || null);
+        setSevenDaysData(init?.dataseries || null);
+        setSevenDaysInit(init?.init || null);
+        setLoading(false);
+      } catch (err: unknown) {
+        console.log("error", err);
+        setError(new Error("Something went wrong"));
+        setLoading(false);
       }
     };
-    const fetcSevenDaysData = async () => {
-      const url =
-        "http://www.7timer.info/bin/api.pl?lon=" +
-        long +
-        "&lat=" +
-        lat +
-        "&product=civillight&output=json";
 
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        // console.log("Weather:", json?.dataseries);
-        setSevenDaysData(json?.dataseries);
-        setSevenDaysInit(json?.init);
-      } catch (error: any) {
-        console.log("error", error);
-        setError(error);
-      }
-    };
-    fetchAllData();
-    fetcSevenDaysData();
-  }, [lat, long]);
+    fetchData();
+  }, [10000]);
+
+  if (loading) {
+    return <SpinnerComponent size={105} />;
+  }
+
+  //  if (Error) {
+  //    return <p>Error: {(Error as unknown as Error).message}</p>;
+  //  }
 
   return (
     <BrowserRouter>

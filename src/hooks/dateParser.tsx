@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
 // This ended up being a bit messy.
 // I was trying a few different ways
@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 // The useDateParser I think turned
 // out to be the most promising one.
 
-export const useFormattedDate = (dateNumber: number) => {
+export const useSevenDaysParser = (dateNumber: number) => {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       weekday: "long",
@@ -50,56 +50,34 @@ interface DataSeries {
   // Other properties in the data object
 }
 
+const parseDate = (dateStr: string): Date => {
+  const year = parseInt(dateStr.slice(0, 4), 10);
+  const month = parseInt(dateStr.slice(4, 6), 10) - 1;
+  const day = parseInt(dateStr.slice(6, 8), 10);
+  const hour = parseInt(dateStr.slice(8, 10), 10);
+  return new Date(year, month, day, hour);
+};
+
+const formatDate = (date: Date): string => {
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const weekday = daysOfWeek[date.getDay()];
+  const dayOfMonth = date.getDate();
+  const hour = date.getHours();
+  const daySuffix =
+    ["st", "nd", "rd"][((((dayOfMonth + 90) % 100) - 10) % 10) - 1] || "th";
+  return `${weekday}, ${dayOfMonth}${daySuffix} at ${hour
+    .toString()
+    .padStart(2, "0")}:00 hours`;
+};
+
 export const useDateParser = (init: string, dataseries: DataSeries[]) => {
-  const [formattedDates, setFormattedDates] = useState<string[]>([]);
-
-  useEffect(() => {
-    const parseDate = (dateStr: string) => {
-      const year = parseInt(dateStr.slice(0, 4), 10);
-      const month = parseInt(dateStr.slice(4, 6), 10) - 1; // Months are zero-indexed
-      const day = parseInt(dateStr.slice(6, 8), 10);
-      const hour = parseInt(dateStr.slice(8, 10), 10);
-
-      return new Date(year, month, day, hour);
-    };
-
-    const formatDate = (date: Date) => {
-      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      const weekday = daysOfWeek[date.getDay()];
-      const dayOfMonth = date.getDate();
-      const hour = date.getHours();
-
-      let daySuffix;
-      if (dayOfMonth === 1) {
-        daySuffix = "st";
-      } else if (dayOfMonth === 2) {
-        daySuffix = "nd";
-      } else if (dayOfMonth === 3) {
-        daySuffix = "rd";
-      } else {
-        daySuffix = "th";
-      }
-
-      return `${weekday}, ${dayOfMonth}${daySuffix} at ${hour}:00 hours`;
-    };
-
-    const formattedDatesArray: string[] = [];
-
-    dataseries.forEach((data) => {
-      const { timepoint } = data;
-      const initialDate = parseDate(init);
+  const formattedDates = useMemo(() => {
+    const initialDate = parseDate(init);
+    return dataseries.map((data) => {
       const updatedDate = new Date(initialDate);
-      updatedDate.setHours(updatedDate.getHours() + timepoint);
-
-      if (timepoint === 24) {
-        updatedDate.setDate(updatedDate.getDate() + 1);
-      }
-
-      const formattedDate = formatDate(updatedDate);
-      formattedDatesArray.push(formattedDate);
+      updatedDate.setHours(updatedDate.getHours() + data.timepoint);
+      return formatDate(updatedDate);
     });
-
-    setFormattedDates(formattedDatesArray);
   }, [init, dataseries]);
 
   return formattedDates;
