@@ -24,6 +24,6 @@ You may also see any lint errors in the console.
 
 - Create a better tooltip for the Rechart line chart, so that the date is correctly displayed on hover. At the moment, it's there but not visible.
 - Setup Jest tests, that should be accessable with the command:
-  ### `yarn test`
+  ##### `yarn test`
 - Setup better linting, that should be accessable with the command:
-  ### `yarn lint`
+  ##### `yarn lint`
