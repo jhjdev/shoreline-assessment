@@ -1,10 +1,6 @@
 import { useMemo } from "react";
 
-// This ended up being a bit messy.
-// I was trying a few different ways
-// to parse and render tine and date.
-// The useDateParser I think turned
-// out to be the most promising one.
+// Date parser for the 7timer API Civil light product
 
 export const useSevenDaysParser = (dateNumber: number) => {
   const formatDate = (date: Date) => {
@@ -30,6 +26,8 @@ export const useSevenDaysParser = (dateNumber: number) => {
   return formattedDate;
 };
 
+// Date parser for the 7timer API Civil product (today's weather)
+
 export const newCalculatedDate = (input: string, hours: number) => {
   const hoursToAdd = Number(hours);
   if (!input) return "";
@@ -45,6 +43,7 @@ export const newCalculatedDate = (input: string, hours: number) => {
   return `${day}/${month}/${year} at ${calculatedDate.getHours()}:00`;
 };
 
+// Date parser for the 7timer API Civil product (5 days forecast)
 interface DataSeries {
   timepoint: number;
   // Other properties in the data object
