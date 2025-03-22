@@ -5,6 +5,7 @@ import "./App.css";
 import { useSharedWeatherDataState } from "./state/WeatherData.state";
 import { useEffect } from "react";
 import { SpinnerComponent } from "./components/Spinner";
+import { fetchAllWeatherData } from "./services/weatherApi";
 
 function App() {
   const {
@@ -20,30 +21,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const position = await new Promise<GeolocationPosition>(
-          (resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject);
-          }
-        );
-
-        const { latitude, longitude } = position.coords;
-
-        const fetchWeatherData = async (product: "civil" | "civillight") => {
-          const url = `http://www.7timer.info/bin/api.pl?lon=${longitude}&lat=${latitude}&product=${product}&output=json`;
-          const response = await fetch(url);
-          const json = await response.json();
-          return json;
-        };
-
-        const [data, init] = await Promise.all([
-          fetchWeatherData("civil"),
-          fetchWeatherData("civillight"),
-        ]);
-
-        setData(data?.dataseries || null);
-        setInit(data?.init || null);
-        setSevenDaysData(init?.dataseries || null);
-        setSevenDaysInit(init?.init || null);
+        const { civilData, civilLightData } = await fetchAllWeatherData();
+        
+        setData(civilData?.dataseries || null);
+        setInit(civilData?.init || null);
+        setSevenDaysData(civilLightData?.dataseries || null);
+        setSevenDaysInit(civilLightData?.init || null);
         setLoading(false);
       } catch (err: unknown) {
         console.log("error", err);

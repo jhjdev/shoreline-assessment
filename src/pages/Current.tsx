@@ -1,5 +1,5 @@
-import { useSharedWeatherDataState } from "../state/WeatherData.state";
-import { newCalculatedDate } from "../hooks/dateParser";
+import { useSharedWeatherDataState } from '../state/WeatherData.state';
+import { newCalculatedDate } from '../hooks/dateParser';
 
 const CurrentWeather = () => {
   const { data, init, error } = useSharedWeatherDataState();
@@ -16,7 +16,10 @@ const CurrentWeather = () => {
         </div>
         {error ? (
           <div className="grid grid-cols-4 gap-4 justify-evenly m-2">
-            <p>Error fetching weather data:</p>) : {data.length === 0} ? (
+            <p>Error fetching weather data: {error.message}</p>
+          </div>
+        ) : !data || data.length === 0 ? (
+          <div className="grid grid-cols-4 gap-4 justify-evenly m-2">
             <p>No weather data at the moment</p>
           </div>
         ) : (
@@ -32,7 +35,7 @@ const CurrentWeather = () => {
                             Time:
                           </span>
                           <span className="text-red-700">
-                            {newCalculatedDate(init, x?.timepoint)}
+                            {init && newCalculatedDate(init, x?.timepoint)}
                           </span>
                           <br />
                           <span className="text-slate-950 dark:text-slate-950">
@@ -55,7 +58,15 @@ const CurrentWeather = () => {
                           <span className="text-slate-950 dark:text-slate-950">
                             2m Temperature:
                           </span>
-                          <span className="text-red-900">{x?.temp2m}</span>
+                          <span className="text-red-900">
+                            {typeof x?.temp2m === 'number' 
+                              ? `${x.temp2m}°C` 
+                              : x?.temp2m?.max 
+                                ? `${x.temp2m.max}°C` 
+                                : x?.temp2m?.min 
+                                  ? `${x.temp2m.min}°C` 
+                                  : 'N/A'}
+                          </span>
                           <br />
                           <span className="text-slate-950 dark:text-slate-950">
                             2m Relative Humidity:
@@ -73,13 +84,13 @@ const CurrentWeather = () => {
                             10m Wind Speed:
                           </span>
                           <span className="text-red-900">
-                            {x?.wind10m.speed}
+                            {x?.wind10m?.speed ? `${x.wind10m.speed} km/h` : 'N/A'}
                           </span>
                           <br />
                           <span className="text-slate-950 dark:text-slate-950">
                             Weather Type:
                           </span>
-                          <span className="text-red-900">{x.weather}</span>
+                          <span className="text-red-900">{x?.weather || 'N/A'}</span>
                           <br />
                         </p>
                       </div>

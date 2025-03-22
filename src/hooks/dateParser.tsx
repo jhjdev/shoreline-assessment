@@ -1,36 +1,31 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 // Date parser for the 7timer API Civil light product
 
 export const useSevenDaysParser = (dateNumber: number) => {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
     };
-    return new Intl.DateTimeFormat("en-US", options).format(date);
+    return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  const getFormattedDate = (dateNumber: number) => {
-    const year = Math.floor(dateNumber / 10000);
-    const month = Math.floor((dateNumber % 10000) / 100) - 1; // Months are 0-indexed
-    const day = dateNumber % 100;
-    const date = new Date(year, month, day);
-    return formatDate(date);
-  };
+  const year = Math.floor(dateNumber / 10000);
+  const month = Math.floor((dateNumber % 10000) / 100) - 1; // Months are 0-indexed
+  const day = dateNumber % 100;
 
-  const formattedDate = getFormattedDate(dateNumber);
-
-  return formattedDate;
+  const date = new Date(year, month, day);
+  return formatDate(date);
 };
 
 // Date parser for the 7timer API Civil product (today's weather)
 
 export const newCalculatedDate = (input: string, hours: number) => {
   const hoursToAdd = Number(hours);
-  if (!input) return "";
+  if (!input) return '';
 
   const year = parseInt(input.slice(0, 4), 10);
   const month = parseInt(input.slice(4, 6), 10);
@@ -58,15 +53,15 @@ const parseDate = (dateStr: string): Date => {
 };
 
 const formatDate = (date: Date): string => {
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const weekday = daysOfWeek[date.getDay()];
   const dayOfMonth = date.getDate();
   const hour = date.getHours();
   const daySuffix =
-    ["st", "nd", "rd"][((((dayOfMonth + 90) % 100) - 10) % 10) - 1] || "th";
+    ['st', 'nd', 'rd'][((((dayOfMonth + 90) % 100) - 10) % 10) - 1] || 'th';
   return `${weekday}, ${dayOfMonth}${daySuffix} at ${hour
     .toString()
-    .padStart(2, "0")}:00 hours`;
+    .padStart(2, '0')}:00 hours`;
 };
 
 export const useDateParser = (init: string, dataseries: DataSeries[]) => {

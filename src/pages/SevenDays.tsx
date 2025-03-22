@@ -1,5 +1,5 @@
-import { useSevenDaysParser } from "../hooks/dateParser";
-import { useSharedWeatherDataState } from "../state/WeatherData.state";
+import { useSevenDaysParser } from '../hooks/dateParser';
+import { useSharedWeatherDataState } from '../state/WeatherData.state';
 
 const SevenDaysForecast = () => {
   const { sevenDaysData, error } = useSharedWeatherDataState();
@@ -22,8 +22,11 @@ const SevenDaysForecast = () => {
         </div>
         {error ? (
           <div className="grid grid-cols-4 gap-4 justify-evenly m-2">
-            <p>Error fetching weather data:</p>) : {sevenDaysData.length === 0}{" "}
-            ? (<p>No weather data at the moment</p>
+            <p>Error fetching weather data:</p>
+          </div>
+        ) : !sevenDaysData || sevenDaysData.length === 0 ? (
+          <div className="grid grid-cols-4 gap-4 justify-evenly m-2">
+            <p>No weather data at the moment</p>
           </div>
         ) : (
           <div className="grid grid-cols-4 gap-4 justify-evenly m-2">
@@ -43,14 +46,24 @@ const SevenDaysForecast = () => {
                           </span>
                           <br />
                           <span className="text-slate-950 dark:text-slate-950">
-                            Highest Temprature:
+                            Highest Temperature:
                           </span>
-                          <span className="text-red-900">{x?.temp2m.max}˚</span>
+                          <span className="text-red-900">
+                            {typeof x?.temp2m === 'object'
+                              ? x?.temp2m.max
+                              : x?.temp2m}
+                            ˚
+                          </span>
                           <br />
                           <span className="text-slate-950 dark:text-slate-950">
-                            Lowest Temprature:
+                            Lowest Temperature:
                           </span>
-                          <span className="text-red-900">{x?.temp2m.min}˚</span>
+                          <span className="text-red-900">
+                            {typeof x?.temp2m === 'object'
+                              ? x?.temp2m.min
+                              : 'N/A'}
+                            ˚
+                          </span>
                         </p>
                       </div>
                     </div>
