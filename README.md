@@ -4,36 +4,47 @@ This app was an assessment from Shoreline Wind for the position of Lead Technica
 
 The assignment was delivered in the early weeks of September 2023, and helped me secure the position.
 
-Since then, I've maintained the project and done some refactoring and added to it to keep myself sharp.
+Since then, I've maintained the project, done some refactoring and added new things to it. To keep myself sharp.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn`
+```bash
+yarn
+```
 
 installs all dependencies.
 
-### `yarn lint`
+```bash
+yarn lint
+```
 
 Checks for linting errors.
 
-### `yarn lint:fix`
+```bash
+yarn lint:fix`
+```
 
 Fixes linting errors.
 
-### `yarn test`
+```bash
+yarn test
+```
 
-Run unit tests.
+Runs unit tests.
 
-### `yarn test:e2e`
+```bash
+yarn test:e2e
+```
 
 Run end to end tests.
 
 After that, you can run:
 
-### `yarn start`
-
+```bash
+yarn start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:5173](http://localhost:5173/) to view it in your browser.
@@ -43,12 +54,13 @@ You may also see any lint errors in the console.
 
 ## Changelog
 
-23.03.2025: 
+23.03.2025:
+
 - Upgraded packages and setup to use the latest versions
-- Refactoring. Moved the api calls to their own file called api.ts 
+- Refactoring. Moved the api calls to their own file called api.ts
 - Added a better tooltip to the 5 day forecast
 - Made minor UI changes to the sidebar
-- Added lint Checks
+- Added lint checks
 - Added tests
 
 ## To-Do list:
@@ -56,4 +68,3 @@ You may also see any lint errors in the console.
 - Add a text to the spinner that says something like "Please wait while we fetch the weather data"
 - Add a header the displays the users location along with some other information. Perhaps information about the current day, quote of the day, fun fact of the day etc. Could be fun to play around with
 - Add a footer that displays rights and contact information for myself
-
