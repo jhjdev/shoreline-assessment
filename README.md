@@ -14,39 +14,38 @@ In the project directory, you can run:
 yarn
 ```
 
-installs all dependencies.
+(installs all dependencies)
 
 ```bash
 yarn lint
 ```
 
-Checks for linting errors.
+(checks for linting errors)
 
 ```bash
-yarn lint:fix`
+yarn lint:fix
 ```
 
-Fixes linting errors.
+(fixes linting errors)
 
 ```bash
 yarn test
 ```
 
-Runs unit tests.
+(runs unit tests)
 
 ```bash
 yarn test:e2e
 ```
 
-Run end to end tests.
+(runs end to end tests)
 
-After that, you can run:
+<b>After that, you can run:</b>
 
 ```bash
 yarn start
 ```
-
-Runs the app in the development mode.\
+Which runs the app in the development mode.\
 Open [http://localhost:5173](http://localhost:5173/) to view it in your browser.
 
 The page will reload when you make changes.\
