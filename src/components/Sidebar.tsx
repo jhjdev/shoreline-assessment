@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ViteLogo } from '../assets/svg/ViteLogo';
 import { ReactLogo } from '../assets/svg/ReactLogo';
+import { TailwindLogo } from '../assets/svg/TailwindLogo';
 import { DebugIcon } from '../assets/svg/DebugIcon';
 import { SevenDaysForecastIcon } from '../assets/svg/SevenDaysForecastIcon';
 import { CurrentWeatherIcon } from '../assets/svg/CurrentWeatherIcon';
@@ -14,9 +15,9 @@ const Sidebar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <aside className="w-60 bg-gray-800 p-4 min-h-screen">
-      <h2 className="text-xl text-white mb-6 text-center uppercase">
-        Shoreline App
+    <aside className="w-72 bg-gray-800 p-4 min-h-screen">
+      <h2 className="text-lg text-white mb-6 text-center uppercase">
+        Shoreline Assessment
       </h2>
 
       <div className="flex justify-center space-x-4 mb-8">
@@ -35,6 +36,14 @@ const Sidebar = () => {
           className="hover:opacity-80 transition-opacity"
         >
           <ReactLogo />
+        </a>
+        <a
+          href="https://tailwindcss.com"
+          target="_blank"
+          rel="noreferrer"
+          className="hover:opacity-80 transition-opacity"
+        >
+          <TailwindLogo />
         </a>
       </div>
 

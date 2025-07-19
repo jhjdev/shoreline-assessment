@@ -33,7 +33,7 @@ const isMacOS = (): boolean => {
 /**
  * Checks if the current browser/OS combination has known geolocation issues
  */
-const hasKnownGeolocationIssues = (): {
+export const hasKnownGeolocationIssues = (): {
   hasIssues: boolean;
   reason: string;
 } => {

@@ -1,4 +1,4 @@
-import { useSevenDaysParser } from '../hooks/dateParser';
+import { parseSevenDaysDate } from '../hooks/dateParser';
 import { useSharedWeatherDataState } from '../state/WeatherData.state';
 
 const SevenDaysForecast = () => {
@@ -42,7 +42,7 @@ const SevenDaysForecast = () => {
                           </span>
                           <br />
                           <span className="text-red-700">
-                            {useSevenDaysParser(x?.date)}
+                            {parseSevenDaysDate(x?.date)}
                           </span>
                           <br />
                           <span className="text-slate-950 dark:text-slate-950">

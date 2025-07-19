@@ -2,7 +2,9 @@ import { useMemo } from 'react';
 
 // Date parser for the 7timer API Civil light product
 
-export const useSevenDaysParser = (dateNumber: number) => {
+// Date parser for the 7timer API Civil light product
+
+export const parseSevenDaysDate = (dateNumber: number) => {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       weekday: 'long',
@@ -19,6 +21,11 @@ export const useSevenDaysParser = (dateNumber: number) => {
 
   const date = new Date(year, month, day);
   return formatDate(date);
+};
+
+// Keep the old hook for backward compatibility but mark as deprecated
+export const useSevenDaysParser = (dateNumber: number) => {
+  return parseSevenDaysDate(dateNumber);
 };
 
 // Date parser for the 7timer API Civil product (today's weather)

@@ -7,9 +7,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  TooltipProps,
 } from 'recharts';
-import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import { useSharedWeatherDataState } from '../state/WeatherData.state';
 import { useDateParser } from '../hooks/dateParser';
 
@@ -18,17 +16,18 @@ interface DataSeries {
   // Other properties in the data object
 }
 
-const FiveDaysForecast = () => {
+export default function FiveDays() {
   const { data, init, loading } = useSharedWeatherDataState();
+
+  // Always call hooks at the top level
+  const dataseries: DataSeries[] = data ? [...data] : [];
+  const formattedDate = useDateParser(init || '', dataseries);
+
   if (!data) {
     return <p>No data available</p>;
   }
 
-  const dataseries: DataSeries[] = [...data];
-
-  const formattedDate = useDateParser(init || '', dataseries);
   console.log('formattedDate', formattedDate);
-
   const chartData = data.slice(0, 30).map((x, index) => {
     // Handle temperature which can be either a number or an object with min/max
     let temperature;
@@ -47,7 +46,7 @@ const FiveDaysForecast = () => {
     } else {
       temperature = null;
     }
-    
+
     return [
       {
         name: formattedDate[index] || 'No Date Available',
@@ -63,14 +62,17 @@ const FiveDaysForecast = () => {
   console.log(...bars);
 
   // Custom tooltip component for formatting temperature with °C
-  const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const temperature = payload[0].value;
       return (
         <div className="custom-tooltip bg-white p-3 border border-gray-300 rounded shadow-md">
           <p className="font-semibold text-gray-700">{`Date: ${label}`}</p>
           <p className="text-cyan-600">
-            {`Temperature: ${temperature !== null ? `${temperature}°C` : 'N/A'}`}
+            {`Temperature: ${
+              temperature !== null ? `${temperature}°C` : 'N/A'
+            }`}
           </p>
         </div>
       );
@@ -118,7 +120,15 @@ const FiveDaysForecast = () => {
                     >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                      <YAxis tick={{ fontSize: 12 }} label={{ value: 'Temperature (°C)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' } }} />
+                      <YAxis
+                        tick={{ fontSize: 12 }}
+                        label={{
+                          value: 'Temperature (°C)',
+                          angle: -90,
+                          position: 'insideLeft',
+                          style: { textAnchor: 'middle' },
+                        }}
+                      />
                       <Tooltip content={<CustomTooltip />} />
                       <Legend />
                       <Line
@@ -138,6 +148,4 @@ const FiveDaysForecast = () => {
       </div>
     </>
   );
-};
-
-export default FiveDaysForecast;
+}
