@@ -1,4 +1,12 @@
-import { useSharedWeatherDataState } from "../state/WeatherData.state";
+import { useSharedWeatherDataState } from '../state/WeatherData.state';
+
+// Helper function to format temperature
+const formatTemperature = (temp: number | { max: number; min: number }) => {
+  if (typeof temp === 'number') {
+    return `${temp}°C`;
+  }
+  return `${temp.min}°C - ${temp.max}°C`;
+};
 
 export default function SevenDayForecast() {
   const { sevenDaysData, sevenDaysInit } = useSharedWeatherDataState();
@@ -20,7 +28,7 @@ export default function SevenDayForecast() {
               Day {Math.floor(weather.timepoint / 24)}
             </h2>
             <div className="space-y-2">
-              <p>Temperature: {weather.temp2m}°C</p>
+              <p>Temperature: {formatTemperature(weather.temp2m)}</p>
               <p>Cloud Cover: {weather.cloudcover}%</p>
               <p>Humidity: {weather.rh2m}%</p>
               <p>

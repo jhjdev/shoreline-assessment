@@ -1,4 +1,12 @@
-import { useSharedWeatherDataState } from "../state/WeatherData.state";
+import { useSharedWeatherDataState } from '../state/WeatherData.state';
+
+// Helper function to format temperature
+const formatTemperature = (temp: number | { max: number; min: number }) => {
+  if (typeof temp === 'number') {
+    return `${temp}°C`;
+  }
+  return `${temp.min}°C - ${temp.max}°C`;
+};
 
 export default function WeatherNow() {
   const { data, init } = useSharedWeatherDataState();
@@ -17,7 +25,7 @@ export default function WeatherNow() {
             className="bg-white rounded-lg shadow p-6"
           >
             <h2 className="text-xl font-semibold mb-4">
-              Temperature: {weather.temp2m}°C
+              Temperature: {formatTemperature(weather.temp2m)}
             </h2>
             <div className="space-y-2">
               <p>Cloud Cover: {weather.cloudcover}%</p>

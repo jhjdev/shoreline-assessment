@@ -30,12 +30,22 @@ interface WeatherState {
   sevenDaysInit: string | null;
   loading: boolean;
   error: Error | null;
+  coordinates: { latitude: number; longitude: number } | null;
+  isUsingFallbackLocation: boolean;
+  fallbackReason?: string;
+  debugMode: boolean;
   setData: (data: WeatherDataSeries[] | null) => void;
   setInit: (init: string | null) => void;
   setSevenDaysData: (data: WeatherDataSeries[] | null) => void;
   setSevenDaysInit: (init: string | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: Error | null) => void;
+  setCoordinates: (
+    coordinates: { latitude: number; longitude: number } | null
+  ) => void;
+  setIsUsingFallbackLocation: (isUsing: boolean) => void;
+  setFallbackReason: (reason: string | undefined) => void;
+  setDebugMode: (enabled: boolean) => void;
 }
 
 export const useSharedWeatherDataState = create<WeatherState>((set) => ({
@@ -45,10 +55,19 @@ export const useSharedWeatherDataState = create<WeatherState>((set) => ({
   sevenDaysInit: null,
   loading: true,
   error: null,
+  coordinates: null,
+  isUsingFallbackLocation: false,
+  fallbackReason: undefined,
+  debugMode: false,
   setData: (data) => set({ data }),
   setInit: (init) => set({ init }),
   setSevenDaysData: (data) => set({ sevenDaysData: data }),
   setSevenDaysInit: (init) => set({ sevenDaysInit: init }),
   setLoading: (loading) => set({ loading }),
   setError: (error) => set({ error }),
+  setCoordinates: (coordinates) => set({ coordinates }),
+  setIsUsingFallbackLocation: (isUsing) =>
+    set({ isUsingFallbackLocation: isUsing }),
+  setFallbackReason: (reason) => set({ fallbackReason: reason }),
+  setDebugMode: (enabled) => set({ debugMode: enabled }),
 }));
