@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@headlessui/react": "latest",
-    "@heroicons/react": "2.2.0",
-    "@tailwindcss/forms": "latest",
+    "@heroicons/react": "latest",
+    "@tailwindcss/forms": "0.5.10",
     "concurrently": "^9.1.2",
     "date-fns": "latest",
     "postcss": "latest",

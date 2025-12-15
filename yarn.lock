@@ -3921,14 +3921,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/forms@latest":
-  version: 0.5.3
-  resolution: "@tailwindcss/forms@npm:0.5.3"
+"@tailwindcss/forms@npm:0.5.10":
+  version: 0.5.10
+  resolution: "@tailwindcss/forms@npm:0.5.10"
   dependencies:
     mini-svg-data-uri: ^1.2.3
   peerDependencies:
-    tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1"
-  checksum: 9eddb4dbd06d01b1068138ff52a54ed0e35a28e7bfd3c72e226fc28658ecd92a9c078c4abe9c83db090984672040644d7ae2e035933fb619dd703df1d87aa275
+    tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1 || >= 4.0.0-alpha.20 || >= 4.0.0-beta.1"
+  checksum: 4526d02edccc4e44599d9588f83e4ac3e9435d137da5638653de2e74d5b612ade449a8c26d075be21692c1ac00a514aaffdb6723e526e3c8314c9a75a9f45979
   languageName: node
   linkType: hard
 
@@ -15295,7 +15295,7 @@ recharts@latest:
     "@headlessui/react": latest
     "@heroicons/react": 2.2.0
     "@playwright/test": ^1.51.1
-    "@tailwindcss/forms": latest
+    "@tailwindcss/forms": 0.5.10
     "@testing-library/jest-dom": ^6.6.3
     "@testing-library/react": ^16.2.0
     "@types/babel__generator": ^7.27.0
