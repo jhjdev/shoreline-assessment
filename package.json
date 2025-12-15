@@ -68,5 +68,9 @@
     "typescript": "latest",
     "vite": "^7.0.5"
   },
+  "resolutions": {
+    "glob@npm:^10.2.2": "10.5.0",
+    "glob@npm:^10.3.10": "10.5.0"
+  },
   "packageManager": "yarn@3.6.4"
 }
