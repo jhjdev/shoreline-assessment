@@ -16,7 +16,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@headlessui/react": "latest",
+    "@headlessui/react": "1.7.19",
     "@heroicons/react": "latest",
     "@tailwindcss/forms": "0.5.10",
     "concurrently": "^9.1.2",
